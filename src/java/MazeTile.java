@@ -8,6 +8,8 @@ public class MazeTile {
     public static final String TILE_TYPE_WALL = "wall";
     public static final String TILE_TYPE_TUNNEL = "tunnel";
     public static final String TILE_TYPE_SOLUTION = "solution";
+    public static final String TILE_TYPE_START = "start";
+    public static final String TILE_TYPE_END = "end";
     private final Point position;
     private String type;
     private boolean visited = false;
@@ -42,13 +44,19 @@ public class MazeTile {
         String type = getType();
         switch (type) {
             case TILE_TYPE_WALL:
-                result = "#";
+                result = "x";
                 break;
             case TILE_TYPE_TUNNEL:
-                result = " ";
+                result = ".";
                 break;
             case TILE_TYPE_SOLUTION:
-                result = "x";
+                result = "O";
+                break;
+            case TILE_TYPE_START:
+                result = "S";
+                break;
+            case TILE_TYPE_END:
+                result = "E";
                 break;
         }
         return result;

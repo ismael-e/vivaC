@@ -61,13 +61,21 @@ public class Maze {
             String solutionLine = "";
 
             for (int x=0; x<getWidth(); x++){
-//                System.out.println("sol : x:"+x+" y:"+y);
                 MazeTile currentTile = getTile( new Point(x,y) );
+                if(currentTile.getPosition().equals(startPoint)){currentTile.setType(MazeTile.TILE_TYPE_START);}
+                if(currentTile.getPosition().equals(endPoint)){currentTile.setType(MazeTile.TILE_TYPE_END);}
                 solutionLine = solutionLine + " " + currentTile.display();
             }
             System.out.println(solutionLine);
         }
 
+        String pathOut = "";
+        Iterator solutionIterator = result.iterator();
+        while(solutionIterator.hasNext()){
+            LogEntry currentLogEntry = (LogEntry) solutionIterator.next();
+            pathOut = pathOut + String.valueOf( (int)(currentLogEntry.getLocation().getX()) ) + String.valueOf((int)currentLogEntry.getLocation().getY());
+        }
+        System.out.println(pathOut);
     }
 
     private MazeTile getTile(Point reference){
