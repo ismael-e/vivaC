@@ -28,11 +28,11 @@ public class HashCollider {
                 if(isValidHash(MD5Result ,prefixedZeros)){
                     System.out.println("Hash is Valid: " + MD5Result);
                     //get the index of the char for the pass
-                    String indexchar = getPasswordCharacter(MD5Result, prefixedZeros);
+                    String indexChar = getPasswordCharacter(MD5Result, prefixedZeros);
 
                     // check if index is a valid integer
                     try{
-                        int index = Integer.parseInt(indexchar);
+                        int index = Integer.parseInt(indexChar);
                         System.out.println("Processing Index: " + index);
                         //check if this key already used
                         if(isIndexValid(index , output)){
@@ -46,7 +46,7 @@ public class HashCollider {
                         }
                     }
                     catch (NumberFormatException e){
-                        System.out.println("Rejecting index: " + indexchar + " ...Not an integer");
+                        System.out.println("Rejecting index: " + indexChar + " ...Not an integer");
                     }
                 }
                 counter++;
@@ -65,12 +65,14 @@ public class HashCollider {
     }
 
     private String formatPassword(String[] output) {
+        //extracting all unwanted characters
         String result;
         result = Arrays.toString(output).replaceAll("[ ,\\]\\[]","").toLowerCase();
         return result;
     }
 
     private boolean isIndexValid(int index, String[] output) {
+        //could be simplified into an inline statement but left as such for clarity
         if(output[index]==null){
             return true;
         }else {
@@ -79,8 +81,9 @@ public class HashCollider {
     }
 
     private boolean isValidHash(String md5Result, int prefixedZeros) {
+        //checks if the hash has the required number of prefixed zeros
         boolean result;
-        //Todo improve the regex if time permits
+        //Todo improve the regex to skip use of substring if time permits
         String fragment = md5Result.substring(0,prefixedZeros);
         result = fragment.matches("^[0]+$");
         return result;

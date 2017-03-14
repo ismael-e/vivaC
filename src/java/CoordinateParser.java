@@ -7,13 +7,28 @@ import java.util.List;
  * Created by silver on 13/03/2017.
  */
 public class CoordinateParser {
+
+
+    public void parseCoordinates(String directoryPath) {
+        parseCoordinates(directoryPath,null);
+    }
+
     public void parseCoordinates(String directoryPath,String outputPath){
+        //function has been overloaded and refactored to allow for an optional argument to specify an output location while
+        //respecting the spec : "Your input will be a string pointing..."
+
+        //getting list of files at the end of the specified input path
         List<String> coordinateFileNames = loadFiles(directoryPath);
+        //extracting all coordinate pairs from files
         ArrayList<Coordinate> Coordinates = processFiles(coordinateFileNames);
+        //using coordinates to build the maze in text form at the output path
         generateMazeFile(Coordinates,outputPath);
     }
 
     private void generateMazeFile(ArrayList<Coordinate> coordinates, String outputPath) {
+
+        // getting the dimensions of the maze based on the max x and y values the coordinates can take , assuming that
+        // the maze is rectangular or square and not some weird shape
 
         int height = getMax("Y",coordinates);
         int width = getMax("X",coordinates);
@@ -22,7 +37,6 @@ public class CoordinateParser {
         FileWriter fileWriter;
 
         try {
-
             String destination = "Maze.txt";
 
             if (outputPath != null) {
@@ -35,13 +49,14 @@ public class CoordinateParser {
             fileWriter = new FileWriter(destination);
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
+            //iterating over all possible coordinates in the maze based on its dimensions
             for(int y=0; y<height;y++)
             {
                 String line = "";
                 for (int x=0; x<width;x++)
                 {
                     String currentPosition;
-
+                    //marking coordinates present in the text files as blocked (walls)
                     if(coordinates.contains(new Coordinate(x,y)))
                     {
                         currentPosition = "x";
@@ -68,6 +83,7 @@ public class CoordinateParser {
     }
 
     private int getMax(String dimension, ArrayList<Coordinate> coordinates) {
+        //iterate over all the coordinates and find the max value
         int result = 0;
         Iterator coordinatesIterator = coordinates.iterator();
         if(dimension.equals("X"))
@@ -131,10 +147,15 @@ public class CoordinateParser {
     }
 
     private ArrayList<Coordinate> toCoordinate(String readLine) {
+
+        //converting maze coordinates from string representation to Coordinate
+
         String[] splitCoordinatePairs = readLine.split(",");
         ArrayList<Coordinate> result = new ArrayList<Coordinate>();
+
         //iterating through each text pair of coordinates to convert
-        for(int i = 0; i<splitCoordinatePairs.length; i++){
+        for(int i = 0; i < splitCoordinatePairs.length; i++)
+        {
             String currentPair = splitCoordinatePairs[i];
             int yPosition = currentPair.indexOf("y");
             int xCoordinate = Integer.parseInt(currentPair.substring(1,yPosition));
@@ -142,6 +163,7 @@ public class CoordinateParser {
             Coordinate currentCoordinate = new Coordinate(xCoordinate,yCoordinate);
             result.add(currentCoordinate);
         }
+
         return result;
     }
 
@@ -160,7 +182,5 @@ public class CoordinateParser {
         return result;
     }
 
-    public void parseCoordinates(String directoryPath) {
-        parseCoordinates(directoryPath,null);
-    }
+
 }

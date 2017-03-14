@@ -20,19 +20,7 @@ import java.util.List;
        importMaze(mazePath);
     }
 
-    public MazeImporter(String testResource) throws FileNotFoundException,InputMismatchException,ArrayIndexOutOfBoundsException {
 
-        try{
-            importMaze(testResource);
-        }catch (InputMismatchException e){
-            System.out.println("Please enter only numbers.");
-        }catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("Please enter only numbers from the list above.");
-        }
-
-    }
-
-    //public accessor to help with testing
     private void importMaze(String fileName) throws FileNotFoundException {
         //load text file into memory as an ArrayList
         loadTextFile(fileName);
@@ -55,14 +43,6 @@ import java.util.List;
         dimensions[1] = height;
 
         return dimensions;
-    }
-
-    private Point getCoordinatePoint(String endLine) {
-        Scanner stringScanner;
-        stringScanner = new Scanner(endLine);
-        int endX = stringScanner.nextInt();
-        int endY = stringScanner.nextInt();
-        return new Point(endX,endY);
     }
 
     private HashMap<Point, MazeTile> mapMazeBody() {
