@@ -7,14 +7,10 @@ import java.util.List;
  * Created by silver on 13/03/2017.
  */
 public class CoordinateParser {
-    public String parseCoordinates(String directoryPath){
-        String result = null;
-
+    public void parseCoordinates(String directoryPath){
         List<String> coordinateFileNames = loadFiles(directoryPath);
         ArrayList<Coordinate> Coordinates = processFiles(coordinateFileNames);
         generateMazeFile(Coordinates);
-
-        return result;
     }
 
     private void generateMazeFile(ArrayList<Coordinate> coordinates) {

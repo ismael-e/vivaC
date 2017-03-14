@@ -33,25 +33,26 @@ public class Maze {
         System.out.println("Exit X :" + getEndPoint().x + " Y :" +getEndPoint().y);
     }
 
-    public void solve() {
+    public String solve() {
         //place the adventurer on the start tile and start his journey
-        ArrayList<LogEntry> result = adventurer.startQuest(startPoint);
-
-        if (result!=null){
+        ArrayList<LogEntry> pathOut = adventurer.startQuest(startPoint);
+        String result = null;
+        if ( pathOut != null){
             //process the log entries to generate a solution for the console.
-            displaySolution(adventurer.travelLog);
+            result = displaySolution(adventurer.travelLog);
         }
         else {
             //show a fail message
             failed();
         }
+        return result;
     }
 
     private void failed() {
         System.out.println("Maze could not be solved.");
     }
 
-    private void displaySolution(ArrayList<LogEntry> result) {
+    private String displaySolution(ArrayList<LogEntry> result) {
         System.out.println("---PATH OUT---");
         markSolution(result);
 
@@ -75,7 +76,7 @@ public class Maze {
             LogEntry currentLogEntry = (LogEntry) solutionIterator.next();
             pathOut = pathOut + String.valueOf( (int)(currentLogEntry.getLocation().getX()) ) + String.valueOf((int)currentLogEntry.getLocation().getY());
         }
-        System.out.println(pathOut);
+        return pathOut;
     }
 
     private MazeTile getTile(Point reference){

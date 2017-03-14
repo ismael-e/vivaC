@@ -33,7 +33,7 @@ public class HashCollider {
                     // check if index is a valid integer
                     try{
                         int index = Integer.parseInt(indexchar);
-                        System.out.println("Processing Index : " + index);
+                        System.out.println("Processing Index: " + index);
                         //check if this key already used
                         if(isIndexValid(index , output)){
                             System.out.println("unused index ... Saving to position");
@@ -42,11 +42,11 @@ public class HashCollider {
                             keysFound++;
                         }else{
                             //this slot already used up
-                            System.out.println("Rejecting index ...Position already filled");
+                            System.out.println("Rejecting index: " + index + "...Position already filled");
                         }
                     }
                     catch (NumberFormatException e){
-                        System.out.println("Rejecting index ...Not an integer");
+                        System.out.println("Rejecting index: " + indexchar + " ...Not an integer");
                     }
                 }
                 counter++;
