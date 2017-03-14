@@ -7,13 +7,13 @@ import java.util.List;
  * Created by silver on 13/03/2017.
  */
 public class CoordinateParser {
-    public void parseCoordinates(String directoryPath){
+    public void parseCoordinates(String directoryPath,String outputPath){
         List<String> coordinateFileNames = loadFiles(directoryPath);
         ArrayList<Coordinate> Coordinates = processFiles(coordinateFileNames);
-        generateMazeFile(Coordinates);
+        generateMazeFile(Coordinates,outputPath);
     }
 
-    private void generateMazeFile(ArrayList<Coordinate> coordinates) {
+    private void generateMazeFile(ArrayList<Coordinate> coordinates, String outputPath) {
 
         int height = getMax("Y",coordinates);
         int width = getMax("X",coordinates);
@@ -22,7 +22,17 @@ public class CoordinateParser {
         FileWriter fileWriter;
 
         try {
-            fileWriter = new FileWriter("ParserOutput/Maze.txt");
+
+            String destination = "Maze.txt";
+
+            if (outputPath != null) {
+                destination = outputPath + destination;
+            }
+            else {
+                destination = "ParserOutput/" + destination;
+            }
+
+            fileWriter = new FileWriter(destination);
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
             for(int y=0; y<height;y++)
@@ -47,7 +57,8 @@ public class CoordinateParser {
             }
             printWriter.close();
             fileWriter.close();
-            System.out.println("Maze has been saved in ParserOutput as Maze.txt");
+            System.out.println("Maze has been saved: "+ destination);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,5 +158,9 @@ public class CoordinateParser {
             }
         }
         return result;
+    }
+
+    public void parseCoordinates(String directoryPath) {
+        parseCoordinates(directoryPath,null);
     }
 }
